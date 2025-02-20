@@ -1,0 +1,23 @@
+[
+    {
+         "id": "1",
+         "nombre": "Tv 32 Smart",
+         "marca": "Philco",
+         "precio": 10000,
+         "precioOferta": 9400
+    },
+    {
+         "id": "2",
+         "nombre": "Heladera",
+         "marca": "Samsung",
+         "precio": 85000,
+         "precioOferta": 80000
+    },
+    {
+         "id": "3",
+         "nombre": "Lavarropas",
+         "marca": "LG",
+         "precio": 70000,
+         "precioOferta": 0
+    }
+]
