@@ -100,6 +100,32 @@ function mostrarCarrito() {
   document.getElementById("pantalla-carrito").style.display = "block";
 }
 
+
+
+
+function vaciarCarrito(){
+  try {
+
+    carrito = [];
+    localStorage.clear();
+    mostrarCarrito();
+    Swal.fire({
+      title: "Se limpio el carrito correctamente!",
+      icon: "success",
+      draggable: true
+    });
+  }
+  catch (error){
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Se genero un error al intentar vaciar el carrito.",
+      footer: '<a href="#">Contactese con soporte</a>'
+    });
+  }
+ 
+}
+
 function eliminarDelCarrito(index) {
   carrito.splice(index, 1);
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -145,6 +171,10 @@ document.getElementById("buscar").addEventListener("click", filtrarProductos);
 document
   .getElementById("ver-carrito")
   .addEventListener("click", mostrarCarrito);
+  document
+  .getElementById("vaciar-carrito")
+  .addEventListener("click", vaciarCarrito);
+  
 document
   .getElementById("cerrar-carrito")
   .addEventListener("click", cerrarCarrito);
