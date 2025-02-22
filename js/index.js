@@ -100,30 +100,61 @@ function mostrarCarrito() {
   document.getElementById("pantalla-carrito").style.display = "block";
 }
 
-
-
-
-function vaciarCarrito(){
+function vaciarCarrito() {
   try {
-
     carrito = [];
     localStorage.clear();
     mostrarCarrito();
     Swal.fire({
       title: "Se limpio el carrito correctamente!",
       icon: "success",
-      draggable: true
+      draggable: true,
     });
-  }
-  catch (error){
+  } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Oops...",
       text: "Se genero un error al intentar vaciar el carrito.",
-      footer: '<a href="#">Contactese con soporte</a>'
+      footer: '<a href="#">Contactese con soporte</a>',
     });
   }
- 
+}
+
+function realizarVenta() {
+  try {
+    const totalCarrito = document.getElementById("total-carrito");
+    if (totalCarrito.textContent && totalCarrito.textContent != "0") {
+      Swal.fire({
+        icon: "success",
+        title: "Finalizar Venta",
+        html:
+          "El importe de la compra es <b>$" +
+          totalCarrito.textContent +
+          "</b>.\nGracias por su compra",
+      });
+
+      carrito = [];
+      localStorage.clear();
+      mostrarCarrito();
+    } else {
+      Swal.fire({
+        title: "<strong>Carrito Vacio</strong>",
+        icon: "info",
+        html: `<b>Por favor ingrese productos para realizar la compra.</b>.`,
+        showCloseButton: true,
+        confirmButtonText: `
+          <i class="fa fa-thumbs-up"></i> Continuar!
+        `,
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Se genero un error al intentar vaciar el carrito.",
+      footer: '<a href="#">Contactese con soporte</a>',
+    });
+  }
 }
 
 function eliminarDelCarrito(index) {
@@ -149,11 +180,10 @@ async function getProductosAPI() {
       icon: "error",
       title: "Oops...",
       text: "excepcion al leer API: " + error,
-      footer: '<a href="#">Contactese con soporte</a>'
+      footer: '<a href="#">Contactese con soporte</a>',
     });
     return [];
   } finally {
-    
     // Swal.fire({
     //   icon: "error",
     //   title: "Oops...",
@@ -171,13 +201,16 @@ document.getElementById("buscar").addEventListener("click", filtrarProductos);
 document
   .getElementById("ver-carrito")
   .addEventListener("click", mostrarCarrito);
-  document
+document
   .getElementById("vaciar-carrito")
   .addEventListener("click", vaciarCarrito);
-  
+
 document
   .getElementById("cerrar-carrito")
   .addEventListener("click", cerrarCarrito);
+document
+  .getElementById("realizar-venta")
+  .addEventListener("click", realizarVenta);
 
 mostrarProductos(productos);
 actualizarCarrito();
@@ -187,13 +220,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     await getProductosAPI();
     filtrarProductos();
-  
   } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Oops...",
       text: "Se genero un error al intentar cargar los productos",
-      footer: '<a href="#">Contactese con soporte</a>'
+      footer: '<a href="#">Contactese con soporte</a>',
     });
   }
 });
